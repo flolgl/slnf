@@ -1,41 +1,39 @@
 import React, {Component} from 'react';
 
 import {
-    Stylesheet,
+    StyleSheet,
     Text,
     View,
     Image,
     TouchableOpacity
 } from 'react-native';
 
-export class ProfileScreen extends Component {
+export const ProfileScreen = () => {
 
-    render() {
-        return (
-            <View style = {styles.container}>
-                <View style={styles.header}></View>
-                <Image style={styles.avatar} source= {{uri: 'https://i.pinimg.com/236x/bc/10/ec/bc10ec5e4c006e46090a8f5a335069ad.jpg'}}></Image>
-                <View style={styles.body}>
-                    <View style={styles.bodyContent}>
-                        <Text style={styles.name}> JF Brette </Text>
-                        <Text style={styles.info}>Prof de Java Serveur</Text>
-                        <Text style={styles.description}> Je vais te bind à ma socket, ou tu veux être ma cliente ? </Text>
+    return (
+        <View style = {styles.container}>
+            <View style={styles.header}></View>
+            <Image style={styles.avatar} source= {{uri: 'https://i.pinimg.com/236x/bc/10/ec/bc10ec5e4c006e46090a8f5a335069ad.jpg'}}></Image>
+            <View style={styles.body}>
+                <View style={styles.bodyContent}>
+                    <Text style={styles.name}> JF Brette </Text>
+                    <Text style={styles.info}>Prof de Java Serveur</Text>
+                    <Text style={styles.description}> Je vais te bind à ma socket, ou tu veux être ma cliente ? </Text>
 
-                        <TouchableOpacity style={styles.buttonContainer}>
-                            <Text> DM ME </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonContainer}>
-                            <Text> See more informations </Text>
-                        </TouchableOpacity>
-                    </View>
-                 </View>
-            </View>
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text> DM ME </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text> See more informations </Text>
+                    </TouchableOpacity>
+                </View>
+                </View>
+        </View>
 
-        )
-    }
+    )
 }
 
-const styles = Stylesheet.create ({
+const styles = StyleSheet.create({
     header: {
         backgrounColor : "#00BFFF",
         height:200,
