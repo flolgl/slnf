@@ -1,3 +1,4 @@
+import { Button } from 'bootstrap';
 import React, {Component} from 'react';
 
 import {
@@ -5,6 +6,7 @@ import {
     Text,
     View,
     Image,
+    Pressable,
     TouchableOpacity
 } from 'react-native';
 
@@ -20,14 +22,15 @@ export const ProfileScreen = () => {
                     <Text style={styles.info}>Prof de Java Serveur</Text>
                     <Text style={styles.description}> Je vais te bind à ma socket, ou tu veux être ma cliente ? </Text>
 
-                    <TouchableOpacity style={styles.buttonContainer}>
-                        <Text> DM ME </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonContainer}>
-                        <Text> See more informations </Text>
-                    </TouchableOpacity>
+                    <Pressable style={styles.connectPressable}>
+                        <Text style={styles.buttonText}>DM ME</Text>
+                    </Pressable>
+
+                    <Pressable style={styles.connectPressable}>
+                        <Text style={styles.buttonText}> Retour </Text>
+                    </Pressable>
                 </View>
-                </View>
+            </View>
         </View>
 
     )
@@ -69,33 +72,50 @@ const styles = StyleSheet.create({
 
     name: {
         fontSize:28,
-        color:"#696969",
+        color:"#ff788b",
         fontWeight: "600",
     },
 
     info: {
         fontSize:16,
-        color:"#00BFFF",
+        color:"#73141f",
         marginTop:10,
+        marginBottom:20,
     },
     
-    descirpiton: {
+    description: {
         fontSize: 16,
-        color: "#696969",
+        color: "#000000",
         marginTop: 10,
         textAlign: 'center',
     },
 
     buttonContainer: {
-        marginTop:10,
-        height:45,
+
+        backgroundColor:"#00BFFF"
+    },
+
+    buttonText: {
+        marginHorizontal:30,
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+    },
+
+    connectPressable: {
+        marginTop:20,
         flexDirection:'row',
         justifyContent:'center',
         alignItems:'center',
         marginBottom:20,
         width:250,
         borderRadius:30,
-        bakcgroundColor:"#00BFFF"
+        borderRadius:10, 
+        backgroundColor:"#df4b3f", 
+        height:50, 
     }
+
 
 })
