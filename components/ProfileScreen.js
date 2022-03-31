@@ -7,35 +7,41 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
+import { NavBar } from './NavBar';
 
 export const ProfileScreen = () => {
 
     return (
         <View style = {styles.container}>
-            <View style={styles.header}></View>
-            <Image style={styles.avatar} source= {{uri: 'https://i.pinimg.com/236x/bc/10/ec/bc10ec5e4c006e46090a8f5a335069ad.jpg'}}></Image>
-            <View style={styles.body}>
-                <View style={styles.bodyContent}>
-                    <Text style={styles.name}> JF Brette </Text>
-                    <Text style={styles.info}>Prof de Java Serveur</Text>
-                    <Text style={styles.description}> Je vais te bind à ma socket, ou tu veux être ma cliente ? </Text>
+            <View style = {styles.container}>
+                <View style={styles.header}></View>
+                <Image style={styles.avatar} source= {{uri: 'https://i.pinimg.com/236x/bc/10/ec/bc10ec5e4c006e46090a8f5a335069ad.jpg'}}></Image>
+                <View style={styles.body}>
+                    <View style={styles.bodyContent}>
+                        <Text style={styles.name}> JF Brette </Text>
+                        <Text style={styles.info}>Prof de Java Serveur</Text>
+                        <Text style={styles.description}> Je vais te bind à ma socket, ou tu veux être ma cliente ? </Text>
 
-                    <TouchableOpacity style={styles.buttonContainer}>
-                        <Text> DM ME </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonContainer}>
-                        <Text> See more informations </Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonContainer}>
+                            <Text> DM ME </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonContainer}>
+                            <Text> See more informations </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                </View>
+            </View>
+            <NavBar></NavBar>
         </View>
+
+
 
     )
 }
 
 const styles = StyleSheet.create({
     header: {
-        backgrounColor : "#00BFFF",
+        backgroundColor : "#00BFFF",
         height:200,
     },
 
@@ -51,11 +57,6 @@ const styles = StyleSheet.create({
         marginTop:130
     },
 
-    name: {
-        fontsize:22,
-        color:"#FFFFFF",
-        fontWeight: '600',
-    },
 
     body: {
         marginTop:40,
@@ -95,7 +96,10 @@ const styles = StyleSheet.create({
         marginBottom:20,
         width:250,
         borderRadius:30,
-        bakcgroundColor:"#00BFFF"
-    }
+        backgroundColor:"#00BFFF"
+    },
+    container:{
+        flex:1,
+    },
 
 })

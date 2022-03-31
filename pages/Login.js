@@ -18,8 +18,9 @@ const styles = StyleSheet.create({
             width: 1
         },
         borderRadius: 20,
-        width:"100%",
+        justifyContent:"space-between",
     },
+
     form: {
         paddingVertical:10,
     },
@@ -87,23 +88,34 @@ export const Login = () => {
             <Text style={styles.connexionHeader}>Connexion</Text>
             <View style={styles.container}>
 
-                <Text style={{color:"#01214f", fontWeight: 'bold', fontSize:25,}} >Heureux de vous revoir</Text>
-                <Text style={{color:"gray", marginTop:5}}>Connectez-vous pour continuer !</Text>
+                <View>
+                    <Text style={{color:"#01214f", fontWeight: 'bold', fontSize:25,}} >Heureux de vous revoir</Text>
+                    <Text style={{color:"gray", marginTop:5}}>Connectez-vous pour continuer !</Text>
 
-                <View style={styles.form}>
-                    {BuildTextInput(false, "Email", setEmail, errorEmail)}
-                    {BuildTextInput(true, "Mot de passe", setPassword, errorPassword)}
+                    <View style={styles.form}>
+                        {BuildTextInput(false, "Email", setEmail, errorEmail)}
+                        {BuildTextInput(true, "Mot de passe", setPassword, errorPassword)}
+                    </View>
+                    
+                    <Pressable onPress={() => alert("Pas encore fonctionnel")}>
+                        <Text style={styles.forgotPw}>Mot de passe oublié ?</Text>
+                    </Pressable>
+
+                    <Pressable style={styles.connectPressable} onPress={onPress}>
+                        <Text style={styles.buttonText}>Se connecter</Text>
+                    </Pressable>
                 </View>
                 
-                <Pressable onPress={() => alert("Pas encore fonctionnel")}>
-                    <Text style={styles.forgotPw}>Mot de passe oublié ?</Text>
-                </Pressable>
+                <View style={{alignItems:'center'}}>
+                    <Pressable onPress={() => alert("Pas encore fonctionnel")}>
+                        <Text style={styles.forgotPw}>Pas encore membre ? Créer un compte</Text>
+                    </Pressable>
+                </View>
 
-                <Pressable style={styles.connectPressable} onPress={onPress}>
-                    <Text style={styles.buttonText}>Se connecter</Text>
-                </Pressable>
+  
 
             </View>
+
 
 
 
