@@ -89,7 +89,7 @@ export const Register = () => {
 
 
     return (
-        <ImageBackground style={{ flex: 1,}} source={require('../assets/back.png')}>
+        <ImageBackground style={{ flex: 1,}} source={require('../assets/images/back.png')}>
             <StatusBar/>
 
             <Text style={styles.connexionHeader}>Creation d'un compte</Text>

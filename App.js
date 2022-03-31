@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeScreen } from './components/HomeScreen';
+import { HomeScreen } from './pages/HomeScreen';
 import {ProfileScreen} from './components/ProfileScreen';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';

@@ -69,7 +69,7 @@ export const Login = () => {
 
 
     return (
-        <ImageBackground style={{ flex: 1,}} source={require('../assets/back.png')}>
+        <ImageBackground style={{ flex: 1,}} source={require('../assets/images/back.png')}>
             <StatusBar/>
 
             <Text style={styles.connexionHeader}>Connexion</Text>
