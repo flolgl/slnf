@@ -1,8 +1,138 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, View, Text, Pressable, ImageBackground} from 'react-native';
 import TextInput from 'react-native-material-textinput'
 import * as EmailValidator from 'email-validator';
+import { auth } from '../App';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigation } from '@react-navigation/native';
+
+export const Login = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
+    const [connectionError, setConnectionError] = useState('');
+
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        return auth.onAuthStateChanged(user => {
+            if (user){
+                //console.log("User is logged in");
+                navigation.navigate("Home")
+
+            }
+        })
+    }, [])
+
+    const errorCheck = () => {  
+        setErrorEmail("")
+        setErrorPassword("")
+        setConnectionError("")
+
+        let error = false; 
+        if (!EmailValidator.validate(email)){
+            setErrorEmail("Merci de rentrer une adresse mail valide")
+            error = true;
+        }
+
+        if (password.trim() === ""){
+            setErrorPassword("Merci de rentrer un mot de passe valide")
+            error = true;
+        }
+        return error;
+    }
+
+    const onPress = () => {
+        if (errorCheck())
+            return;
+        
+
+        //firebase authentification
+
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+        })
+        .catch((error) => {
+            
+            setConnectionError("L'email ou le mot de passe sont incorrects")
+        });
+
+
+    }
+
+
+    return (
+        <ImageBackground style={{ flex: 1,}} source={require('../assets/back.png')}>
+            <StatusBar/>
+
+            <Text style={styles.connexionHeader}>Connexion</Text>
+            <View style={styles.container}>
+
+                <View>
+                    <Text style={{color:"#01214f", fontWeight: 'bold', fontSize:25,}} >Heureux de vous revoir</Text>
+                    <Text style={{color:"gray", marginTop:5}}>Connectez-vous pour continuer !</Text>
+
+                    <View style={styles.form}>
+                        {BuildTextInput(false, "Email", setEmail, errorEmail)}
+                        {BuildTextInput(true, "Mot de passe", setPassword, errorPassword)}
+                    </View>
+                    
+                    <Pressable onPress={() => alert("Pas encore fonctionnel")}>
+                        <Text style={styles.forgotPw}>Mot de passe oublié ?</Text>
+                    </Pressable>
+
+                    <Text style={{color:"red", marginTop:5, marginBottom: 5, textAlign:"center"}}>{connectionError}</Text>
+
+                    <Pressable style={styles.connectPressable} onPress={onPress}>
+                        <Text style={styles.buttonText}>Se connecter</Text>
+                    </Pressable>
+                </View>
+                
+                <View style={{alignItems:'center'}}>
+                    <Pressable onPress={() => alert("Pas encore fonctionnel")}>
+                        <Text style={styles.forgotPw}>Pas encore membre ? Créer un compte</Text>
+                    </Pressable>
+                </View>
+
+  
+
+            </View>
+
+
+
+
+        </ImageBackground>
+
+    )
+}
+
+
+/**
+ * 
+ * @param {boolean} password 
+ * @param {string} text 
+ */
+const BuildTextInput = (password, phText, cbState, error) => {
+
+    return (
+        <TextInput
+            label={phText}
+            onChangeText={(text) => cbState(text)}
+            autoComplete = {password ? "email" : "password"}
+            secureTextEntry = {password}
+            error= {error}
+        />
+    )
+
+}   
+
 
 const styles = StyleSheet.create({
 
@@ -54,93 +184,3 @@ const styles = StyleSheet.create({
         fontSize:25
     }
 })
-
-export const Login = () => {
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    
-    const [errorEmail, setErrorEmail] = useState('');
-    const [errorPassword, setErrorPassword] = useState('');
-
-    const onPress = () => {
-        setErrorEmail("")
-        setErrorPassword("")
-
-        let error = false; 
-        if (!EmailValidator.validate(email)){
-            setErrorEmail("Merci de rentrer une adresse mail valide")
-            error = true;
-        }
-
-        if (password.trim() === ""){
-            setErrorPassword("Merci de rentrer un mot de passe valide")
-            error = true;
-        }
-        return error ? null : alert(email+password)
-    }
-
-
-    return (
-        <ImageBackground style={{ flex: 1,}} source={require('../assets/back.png')}>
-            <StatusBar/>
-
-            <Text style={styles.connexionHeader}>Connexion</Text>
-            <View style={styles.container}>
-
-                <View>
-                    <Text style={{color:"#01214f", fontWeight: 'bold', fontSize:25,}} >Heureux de vous revoir</Text>
-                    <Text style={{color:"gray", marginTop:5}}>Connectez-vous pour continuer !</Text>
-
-                    <View style={styles.form}>
-                        {BuildTextInput(false, "Email", setEmail, errorEmail)}
-                        {BuildTextInput(true, "Mot de passe", setPassword, errorPassword)}
-                    </View>
-                    
-                    <Pressable onPress={() => alert("Pas encore fonctionnel")}>
-                        <Text style={styles.forgotPw}>Mot de passe oublié ?</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.connectPressable} onPress={onPress}>
-                        <Text style={styles.buttonText}>Se connecter</Text>
-                    </Pressable>
-                </View>
-                
-                <View style={{alignItems:'center'}}>
-                    <Pressable onPress={() => alert("Pas encore fonctionnel")}>
-                        <Text style={styles.forgotPw}>Pas encore membre ? Créer un compte</Text>
-                    </Pressable>
-                </View>
-
-  
-
-            </View>
-
-
-
-
-        </ImageBackground>
-
-    )
-}
-
-
-/**
- * 
- * @param {boolean} password 
- * @param {string} text 
- */
-const BuildTextInput = (password, phText, cbState, error) => {
-
-    return (
-        <TextInput
-            label={phText}
-            onChangeText={(text) => cbState(text)}
-            autoComplete = {password ? "email" : "password"}
-            secureTextEntry = {password}
-            error= {error}
-        />
-    )
-
-}   
-
