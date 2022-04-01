@@ -1,117 +1,125 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import {
     StyleSheet,
     Text,
     View,
-    Image,
-    Pressable,
-    TouchableOpacity
+    ImageBackground,
+    Dimensions,
+    ScrollView,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+const name = "Nico Cuzon"
+const age = 20
+const location = "Paris"
+const info = "blalblalblblbllbl"
 
 export const ProfileScreen = () => {
 
     return (
-        <View style = {styles.container}>
-            <View style={styles.header}></View>
-            <Image style={styles.avatar} source= {{uri: 'https://i.pinimg.com/236x/bc/10/ec/bc10ec5e4c006e46090a8f5a335069ad.jpg'}}></Image>
-            <View style={styles.body}>
-                <View style={styles.bodyContent}>
-                    <Text style={styles.name}> JF Brette </Text>
-                    <Text style={styles.info}>Prof de Java Serveur</Text>
-                    <Text style={styles.description}> Je vais te bind à ma socket, ou tu veux être ma cliente ? </Text>
+        <ImageBackground
+        source={require('../assets/images/bg.png')}
+        style={styles.bg}
+      >
+        <ScrollView style={styles.containerProfile}>
+          <ImageBackground source={{uri: 'https://i.pinimg.com/236x/bc/10/ec/bc10ec5e4c006e46090a8f5a335069ad.jpg'}} style={styles.photo}>
+            <View style={styles.top}>
+            </View>
+          </ImageBackground>
+  
+            <View style={styles.containerProfileItem}>
+                <View style={styles.matchesProfileItem}>
+                    <Text style={{color:"#ffffff",}}>
+                        <Ionicons name="heart" />
+                        Chauve Him Love
+                    </Text>
+                </View>
+                <Text style={styles.name}>{name}</Text>
 
-                    <Pressable style={styles.connectPressable}>
-                        <Text style={styles.buttonText}>DM ME</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.connectPressable}>
-                        <Text style={styles.buttonText}> Retour </Text>
-                    </Pressable>
+                <Text style={styles.descriptionProfileItem}>
+                    {age} - {location}
+                </Text>
+    
+                <View style={styles.info}>
+                    
+                    <Ionicons name="person" size={16} color="#363636" style={styles.iconProfile} />
+                    <Text style={styles.infoContent}>{info}</Text>
                 </View>
             </View>
-        </View>
+
+        </ScrollView>
+      </ImageBackground>
 
     )
 }
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor : "#00BFFF",
-        height:200,
-    },
-
-    avatar: {
-        width: 130,
-        height: 130,
-        borderRadius: 63,
-        borderWidth: 4,
-        borderColor: "white",
-        marginBottom: 10,
-        alignSelf: 'center',
-        position: 'absolute',
-        marginTop:130
-    },
-
-
-    body: {
-        marginTop:40,
-    },
-
-    bodyContent: {
-        flex:1,
-        alignItems: 'center',
-        padding: 30,
-    },
-
+    bg: {
+		flex: 1,
+		resizeMode: "cover",
+		width: Dimensions.get("window").width,
+		height: Dimensions.get("window").height,
+	},
+    top: {
+		paddingTop: 50,
+		marginHorizontal: 10,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center"
+	},
+    matchesProfileItem: {
+		width: 170,
+		marginTop: -15,
+		backgroundColor: "#0041c4",
+		paddingVertical: 7,
+		paddingHorizontal: 20,
+		borderRadius: 20,
+		textAlign: "center",
+		alignSelf: "center"
+	},
+    containerProfileItem: {
+		backgroundColor: "#ffffff",
+		paddingHorizontal: 10,
+		paddingBottom: 25,
+		margin: 20,
+		borderRadius: 8,
+		marginTop: -65,
+		shadowOpacity: 0.05,
+		shadowRadius: 10,
+		shadowColor: "#000000",
+		shadowOffset: { height: 0, width: 0 }
+	},
     name: {
-        fontSize:28,
-        color:"#ff788b",
-        fontWeight: "600",
-    },
+		paddingTop: 25,
+		paddingBottom: 5,
+		color: "#363636",
+		fontSize: 15,
+		textAlign: "center"
+	},
+    descriptionProfileItem: {
+		color: "#757E90",
+		textAlign: "center",
+		paddingBottom: 20,
+		fontSize: 13
+	},
 
     info: {
-        fontSize:16,
-        color:"#73141f",
-        marginTop:10,
-        marginBottom:20,
-    },
-    
-    description: {
-        fontSize: 16,
-        color: "#000000",
-        marginTop: 10,
-        textAlign: 'center',
-    },
-
-    buttonContainer: {
-
-        backgroundColor:"#00BFFF"
-    },
-
-    buttonText: {
-        marginHorizontal:30,
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'white',
-    },
-
-    connectPressable: {
-        marginTop:20,
-        flexDirection:'row',
-        justifyContent:'center',
-        alignItems:'center',
-        marginBottom:20,
-        width:250,
-        borderRadius:30,
-        backgroundColor:"#df4b3f",
-        height:50,
-    },
-    container:{
-        flex:1,
-    },
-
+		paddingVertical: 8,
+		flexDirection: "row",
+		alignItems: "center",
+	},
+	iconProfile: {
+		color: "#363636",
+        marginRight: 3,
+	},
+	infoContent: {
+		color: "#757E90",
+		fontSize: 16,
+	},
+    photo: {
+		width: Dimensions.get("window").width,
+		height: 450
+	},
 
 })

@@ -1,103 +1,115 @@
 import React from 'react';
-import styles from '../assets/styles';
-
-import { Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Icon from './Icon';
+import { Ionicons } from '@expo/vector-icons';
+import { Text, View, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 
 const CardItem = ({
-  actions,
   description,
   image,
   matches,
   name,
   onPressLeft,
   onPressRight,
-  status,
-  variant
 }) => {
   // Custom styling
-  const fullWidth = Dimensions.get('window').width;
-  const imageStyle = [
-    {
-      borderRadius: 8,
-      width: variant ? fullWidth / 2 - 30 : fullWidth - 80,
-      height: variant ? 170 : 350,
-      margin: variant ? 0 : 20
-    }
-  ];
-
-  const nameStyle = [
-    {
-      paddingTop: variant ? 10 : 15,
-      paddingBottom: variant ? 5 : 7,
-      color: '#363636',
-      fontSize: variant ? 15 : 30
-    }
-  ];
 
   return (
     <View style={styles.containerCardItem}>
       {/* IMAGE */}
-      <Image source={image} style={imageStyle} />
+      <Image source={image} style={styles.imageStyle} />
 
       {/* MATCHES */}
       {matches && (
         <View style={styles.matchesCardItem}>
-          <Text style={styles.matchesTextCardItem}>
-            <Icon name="heart" /> {matches}% Match!
+          <Text style={{color:"#ffffff"}}>
+            {matches}% Match!
           </Text>
         </View>
       )}
 
       {/* NAME */}
-      <Text style={nameStyle}>{name}</Text>
+      <Text style={styles.nameStyle}>{name}</Text>
 
       {/* DESCRIPTION */}
       {description && (
         <Text style={styles.descriptionCardItem}>{description}</Text>
       )}
 
-      {/* STATUS */}
-      {status && (
-        <View style={styles.status}>
-          <View style={status === 'Online' ? styles.online : styles.offline} />
-          <Text style={styles.statusText}>{status}</Text>
-        </View>
-      )}
-
       {/* ACTIONS */}
-      {actions && (
+      
         <View style={styles.actionsCardItem}>
-          <TouchableOpacity style={styles.miniButton}>
-            <Text style={styles.star}>
-              <Icon name="star" />
-            </Text>
-          </TouchableOpacity>
+
 
           <TouchableOpacity style={styles.button} onPress={() => onPressLeft()}>
-            <Text style={styles.like}>
-              <Icon name="like" />
-            </Text>
+            <Ionicons name="heart-outline" size={24} color="#0041c4" />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
             onPress={() => onPressRight()}
           >
-            <Text style={styles.dislike}>
-              <Icon name="dislike" />
-            </Text>
+            <Ionicons name="close" size={24} color="red" />            
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.miniButton}>
-            <Text style={styles.flash}>
-              <Icon name="flash" />
-            </Text>
-          </TouchableOpacity>
         </View>
-      )}
     </View>
   );
 };
 
 export default CardItem;
+
+
+const styles = StyleSheet.create({
+  containerCardItem: {
+		backgroundColor: "#ffffff",
+		borderRadius: 8,
+		alignItems: "center",
+		margin: 10,
+		shadowOpacity: 0.05,
+		shadowRadius: 10,
+		shadowColor: "#000000",
+		shadowOffset: { height: 0, width: 0 },
+	},
+	matchesCardItem: {
+		marginTop: -35,
+		backgroundColor: "#0041c4",
+		paddingVertical: 7,
+		paddingHorizontal: 20,
+		borderRadius: 20,
+	},
+  imageStyle: {
+    borderRadius: 8,
+    width: Dimensions.get('window').width - 80,
+    height: 350,
+    margin: 20,
+  },
+  nameStyle : {
+    paddingTop: 15,
+    paddingBottom: 7,
+    color: '#363636',
+    fontSize: 30,
+  },
+  descriptionCardItem: {
+		color: "#757E90",
+		textAlign: "center"
+	},
+  actionsCardItem: {
+		flexDirection: "row",
+		alignItems: "center",
+		paddingVertical: 30
+	},
+
+  button: {
+		width: 60,
+		height: 60,
+		borderRadius: 30,
+		backgroundColor: "#ffffff",
+		marginHorizontal: 7,
+		alignItems: "center",
+		justifyContent: "center",
+		shadowOpacity: 0.15,
+		shadowRadius: 20,
+		shadowColor: "#363636",
+		shadowOffset: { height: 10, width: 0 }
+	},
+  
+})
