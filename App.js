@@ -1,40 +1,45 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeScreen } from './pages/HomeScreen';
-import {ProfileScreen} from './components/ProfileScreen';
+import {ProfileScreen} from './pages/ProfileScreen';
 import { Login } from './pages/Login';
-import { initializeApp } from "firebase/app";
-import React from "react";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithCredential,
-} from 'firebase/auth';
+import React, {useState, useEffect} from "react";
+import {onAuthStateChanged} from 'firebase/auth';
 import { Ionicons } from '@expo/vector-icons';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCaMoglTtOR3JPnIcsr0FwAk1OOuKHxgsk",
-  authDomain: "slnf-78521.firebaseapp.com",
-  projectId: "slnf-78521",
-  storageBucket: "slnf-78521.appspot.com",
-  messagingSenderId: "540299659797",
-  appId: "1:540299659797:web:d1719e150e7714fc3b9c1c"
-
-};
+import app, {auth, firestore} from "./firebase.js";
+import { View, Text} from 'react-native';
+import { Register } from './pages/Register';
 
 
-const app = initializeApp(firebaseConfig);
+
 const Tab = createBottomTabNavigator();
-const auth = getAuth();
 
-const startPage = auth.currentUser ? 'Home' : 'Login';
+const startPage =true
 
 export default function App() {
-  console.log(startPage)
+
+  const [isFetching, setIsFetching] = useState(true)
+  const [user, setUser] = useState(null)
+
+  useEffect(()=>{
+    onAuthStateChanged(auth, (newUser) => {
+      //console.log(newUser)
+      setUser(newUser)
+      setIsFetching(false)
+
+    });
+
+  }, [])
+
+  if (isFetching){
+    return <View>
+      <Text>Loading</Text>
+    </View>
+  }
   return (
     <NavigationContainer>
       <Tab.Navigator 
-      initialRouteName={startPage}
+      initialRouteName={user ? "Home" : "Login"}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -55,13 +60,8 @@ export default function App() {
       })}>
         <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
         <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
-        {
-          startPage === 'Home' ? (
-            <Tab.Screen name="Login" component={Login} options={{ headerShown: false, tabBarStyle: {display: 'none'}}}/>
-          ) : (
-            null
-          )
-        }
+        <Tab.Screen name="Login" component={Login} options={{ headerShown: false, tabBarStyle: {display: 'none'}, tabBarButton:() => null}}/>
+        <Tab.Screen name="Register" component={Register} options={{ headerShown: false, tabBarStyle: {display: 'none'}, tabBarButton:() => null}}/>
 
       </Tab.Navigator>
     </NavigationContainer>
@@ -69,7 +69,6 @@ export default function App() {
 }
 
 
-export {auth};
 /*
 const styles = StyleSheet.create({
   container: {

@@ -1,11 +1,42 @@
-import React from 'react';
-import { View, ImageBackground, StyleSheet, Dimensions } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, ImageBackground, StyleSheet, Dimensions, Text } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import CardItem from '../components/CardItem';
-import Demo from '../assets/data/demo.js';
 import { StatusBar } from 'expo-status-bar';
+import { collection, query, getDocs } from "firebase/firestore";
+import app, {auth, firestore} from "../firebase.js";
+
+
 
 export const HomeScreen = () => {
+
+	const [isFetching, setIsFetching] = useState(true)
+	const [data, setData] = useState(null)
+
+  useEffect(()=>{
+    const q = query(collection(firestore, "utilisateurs"));
+    let donnees = [];
+    const User = auth.currentUser
+
+    getDocs(q).then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (User.uid != doc.data().uid)
+          donnees.push(doc.data())
+
+
+      });
+      setData(donnees)
+      setIsFetching(false)
+    });
+	}, [])
+
+  if (isFetching){
+		return (<View>
+			<Text>Loading</Text>
+		</View>)
+	}
+
+
   return (
     <>
       <StatusBar/>
@@ -23,11 +54,11 @@ export const HomeScreen = () => {
             renderNoMoreCards={() => null}
             ref={swiper => (this.swiper = swiper)}
           >
-            {Demo.map((item, index) => (
+            {data.map((item, index) => (
               <Card key={index}>
                 <CardItem
                   image={item.image}
-                  name={item.name}
+                  name={item.nom}
                   description={item.description}
                   matches={item.match}
                   onPressLeft={() => this.swiper.swipeLeft()}

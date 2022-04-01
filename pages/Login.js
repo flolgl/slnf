@@ -3,8 +3,8 @@ import React, {useEffect, useState} from 'react';
 import { StyleSheet, View, Text, Pressable, ImageBackground} from 'react-native';
 import TextInput from 'react-native-material-textinput'
 import * as EmailValidator from 'email-validator';
-import { auth } from '../App';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 
 export const Login = () => {
@@ -19,7 +19,7 @@ export const Login = () => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        return auth.onAuthStateChanged(user => {
+        return onAuthStateChanged(auth,user => {
             if (user){
                 //console.log("User is logged in");
                 navigation.navigate("Home")
@@ -56,11 +56,11 @@ export const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
-            const user = userCredential.user;
+            console.log("connected")
             // ...
         })
         .catch((error) => {
-            
+            console.log(error)
             setConnectionError("L'email ou le mot de passe sont incorrects")
         });
 
@@ -96,7 +96,7 @@ export const Login = () => {
                 </View>
                 
                 <View style={{alignItems:'center'}}>
-                    <Pressable onPress={() => alert("Pas encore fonctionnel")}>
+                    <Pressable onPress={() => navigation.navigate("Register")}>
                         <Text style={styles.forgotPw}>Pas encore membre ? Créer un compte</Text>
                     </Pressable>
                 </View>

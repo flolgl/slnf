@@ -1,6 +1,7 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Text, View, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
+import images from './RequireImage';
 
 const CardItem = ({
   description,
@@ -11,11 +12,10 @@ const CardItem = ({
   onPressRight,
 }) => {
   // Custom styling
-
   return (
     <View style={styles.containerCardItem}>
       {/* IMAGE */}
-      <Image source={image} style={styles.imageStyle} />
+      <Image source={images[image]} style={styles.imageStyle} />
 
       {/* MATCHES */}
       {matches && (
@@ -43,10 +43,7 @@ const CardItem = ({
             <Ionicons name="heart-outline" size={24} color="#0041c4" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => onPressRight()}
-          >
+          <TouchableOpacity style={styles.button}onPress={() => onPressRight()}>
             <Ionicons name="close" size={24} color="red" />            
           </TouchableOpacity>
 
